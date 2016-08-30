@@ -26,6 +26,7 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.crypto.SecretKey;
+import javax.ws.rs.core.MultivaluedMap;
 
 import org.apache.cxf.rs.security.oauth2.common.AccessTokenRegistration;
 import org.apache.cxf.rs.security.oauth2.common.Client;
@@ -106,7 +107,12 @@ public class EncryptingDataProvider implements OAuthDataProvider {
         // assuming that no specific scopes is documented/supported
         return Collections.emptyList();
     }
-    
+
+    @Override
+    public List<OAuthPermission> allowableScopeToPermissions(Client client, List<String> requestedScopes) {
+        return convertScopeToPermissions(client, requestedScopes);
+    }
+
     @Override
     public ServerAccessToken getPreauthorizedToken(Client client, List<String> requestedScopes,
                                                    UserSubject subject, String grantType)
@@ -158,5 +164,13 @@ public class EncryptingDataProvider implements OAuthDataProvider {
     public List<RefreshToken> getRefreshTokens(Client client, UserSubject sub) throws OAuthServiceException {
         // TODO Auto-generated method stub
         return null;
+    }
+
+    @Override
+    public boolean noConsentForRequestedScopes(MultivaluedMap<String, String> params, Client client,
+                                               UserSubject userSubject, List<String> requestedScope,
+                                               List<OAuthPermission> permissions) {
+        // TODO Auto-generated method stub
+        return false;
     }
 }

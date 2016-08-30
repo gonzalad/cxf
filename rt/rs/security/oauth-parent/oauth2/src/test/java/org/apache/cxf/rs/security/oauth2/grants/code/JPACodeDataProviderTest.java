@@ -30,6 +30,7 @@ import javax.persistence.Persistence;
 import org.apache.cxf.rs.security.oauth2.common.Client;
 import org.apache.cxf.rs.security.oauth2.common.UserSubject;
 
+import org.apache.cxf.rs.security.oauth2.provider.ListScopeManager;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -53,7 +54,7 @@ public class JPACodeDataProviderTest extends Assert {
             EntityManager em = emFactory.createEntityManager();
             provider = new JPACodeDataProvider();
             provider.setEntityManager(em);
-            provider.setSupportedScopes(Collections.singletonMap("a", "A Scope"));
+            provider.setScopeManager(new ListScopeManager(Collections.singletonMap("a", "A Scope")));
         } catch (Exception ex) {
             ex.printStackTrace();
             fail("Exception during JPA EntityManager creation.");

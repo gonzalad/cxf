@@ -18,10 +18,8 @@
  */
 package org.apache.cxf.rs.security.oidc.idp;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
-
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 
@@ -59,11 +57,7 @@ public class OidcAuthorizationCodeService extends AuthorizationCodeGrantService 
         }
         return preConfiguredConsentForScopes;
     }
-    
-    public void setSkipAuthorizationWithOidcScope(boolean skipAuthorizationWithOidcScope) {
-        super.setScopesRequiringNoConsent(Collections.singletonList(OidcUtils.OPENID_SCOPE));
-    }
-    
+
     @Override
     protected Response startAuthorization(MultivaluedMap<String, String> params, 
                                           UserSubject userSubject,

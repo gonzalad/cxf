@@ -19,13 +19,11 @@
 package org.apache.cxf.rs.security.oidc.idp;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 import java.util.logging.Level;
-
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 
@@ -108,11 +106,7 @@ public class OidcImplicitService extends ImplicitGrantService {
         }
         return preConfiguredConsentForScopes;
     }
-    
-    public void setSkipAuthorizationWithOidcScope(boolean skipAuthorizationWithOidcScope) {
-        super.setScopesRequiringNoConsent(Collections.singletonList(OidcUtils.OPENID_SCOPE));
-    }
-    
+
     @Override
     protected StringBuilder prepareGrant(OAuthRedirectionState state,
                                    Client client,

@@ -19,6 +19,7 @@
 package org.apache.cxf.rs.security.oauth2.grants;
 
 import java.util.List;
+import javax.ws.rs.core.MultivaluedMap;
 
 import org.apache.cxf.rs.security.oauth2.common.AccessTokenRegistration;
 import org.apache.cxf.rs.security.oauth2.common.Client;
@@ -30,7 +31,6 @@ import org.apache.cxf.rs.security.oauth2.provider.OAuthServiceException;
 import org.apache.cxf.rs.security.oauth2.tokens.bearer.BearerAccessToken;
 import org.apache.cxf.rs.security.oauth2.tokens.refresh.RefreshToken;
 
-
 public class OAuthDataProviderImpl implements OAuthDataProvider {
 
     @Override
@@ -40,7 +40,7 @@ public class OAuthDataProviderImpl implements OAuthDataProvider {
 
     @Override
     public ServerAccessToken createAccessToken(AccessTokenRegistration accessToken)
-        throws OAuthServiceException {
+            throws OAuthServiceException {
         return new BearerAccessToken(accessToken.getClient(), 3600);
     }
 
@@ -53,7 +53,7 @@ public class OAuthDataProviderImpl implements OAuthDataProvider {
     @Override
     public ServerAccessToken getPreauthorizedToken(Client client, List<String> requestedScopes,
                                                    UserSubject subject, String grantType)
-        throws OAuthServiceException {
+            throws OAuthServiceException {
         // TODO Auto-generated method stub
         return null;
     }
@@ -68,7 +68,7 @@ public class OAuthDataProviderImpl implements OAuthDataProvider {
     @Override
     public void removeAccessToken(ServerAccessToken accessToken) throws OAuthServiceException {
         // TODO Auto-generated method stub
-        
+
     }
 
     @Override
@@ -78,9 +78,15 @@ public class OAuthDataProviderImpl implements OAuthDataProvider {
     }
 
     @Override
+    public List<OAuthPermission> allowableScopeToPermissions(Client client, List<String> requestedScopes) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
     public void revokeToken(Client client, String token, String tokenTypeHint) throws OAuthServiceException {
         // TODO Auto-generated method stub
-        
+
     }
 
     @Override
@@ -95,4 +101,11 @@ public class OAuthDataProviderImpl implements OAuthDataProvider {
         return null;
     }
 
+    @Override
+    public boolean noConsentForRequestedScopes(MultivaluedMap<String, String> params, Client client,
+                                               UserSubject userSubject, List<String> requestedScope,
+                                               List<OAuthPermission> permissions) {
+        // TODO Auto-generated method stub
+        return false;
+    }
 }

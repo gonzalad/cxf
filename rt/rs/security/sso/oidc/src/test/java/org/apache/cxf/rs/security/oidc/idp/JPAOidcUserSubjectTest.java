@@ -30,6 +30,7 @@ import org.apache.cxf.rs.security.oauth2.common.AccessTokenRegistration;
 import org.apache.cxf.rs.security.oauth2.common.Client;
 import org.apache.cxf.rs.security.oauth2.common.ServerAccessToken;
 import org.apache.cxf.rs.security.oauth2.provider.JPAOAuthDataProvider;
+import org.apache.cxf.rs.security.oauth2.provider.ListScopeManager;
 import org.apache.cxf.rs.security.oidc.common.IdToken;
 
 import org.junit.After;
@@ -55,8 +56,10 @@ public class JPAOidcUserSubjectTest extends Assert {
             EntityManager em = emFactory.createEntityManager();
             provider = new JPAOAuthDataProvider();
             provider.setEntityManager(em);
-            provider.setSupportedScopes(Collections.singletonMap("a", "A Scope"));
-            provider.setSupportedScopes(Collections.singletonMap("refreshToken", "RefreshToken"));
+            ListScopeManager scopeManager = new ListScopeManager();
+            scopeManager.setSupportedScopes(Collections.singletonMap("a", "A Scope"));
+            scopeManager.setSupportedScopes(Collections.singletonMap("refreshToken", "RefreshToken"));
+            provider.setScopeManager(scopeManager);
         } catch (Exception ex) {
             ex.printStackTrace();
             fail("Exception during JPA EntityManager creation.");

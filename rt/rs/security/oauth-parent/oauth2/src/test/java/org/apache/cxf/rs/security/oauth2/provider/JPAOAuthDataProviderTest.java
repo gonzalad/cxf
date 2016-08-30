@@ -59,8 +59,10 @@ public class JPAOAuthDataProviderTest extends Assert {
             EntityManager em = emFactory.createEntityManager();
             provider = new JPAOAuthDataProvider();
             provider.setEntityManager(em);
-            provider.setSupportedScopes(Collections.singletonMap("a", "A Scope"));
-            provider.setSupportedScopes(Collections.singletonMap("refreshToken", "RefreshToken"));
+            ListScopeManager scopeManager = new ListScopeManager();
+            scopeManager.setSupportedScopes(Collections.singletonMap("a", "A Scope"));
+            scopeManager.setSupportedScopes(Collections.singletonMap("refreshToken", "RefreshToken"));
+            provider.setScopeManager(scopeManager);
         } catch (Exception ex) {
             ex.printStackTrace();
             fail("Exception during JPA EntityManager creation.");

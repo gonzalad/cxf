@@ -20,6 +20,7 @@
 package org.apache.cxf.rs.security.oauth2.provider;
 
 import java.util.List;
+import javax.ws.rs.core.MultivaluedMap;
 
 import org.apache.cxf.rs.security.oauth2.common.AccessTokenRegistration;
 import org.apache.cxf.rs.security.oauth2.common.Client;
@@ -122,6 +123,15 @@ public interface OAuthDataProvider {
     void revokeToken(Client client, String tokenId, String tokenTypeHint) throws OAuthServiceException;
 
     /**
+     * Returns permissions that are grantable to the requestor.
+     *
+     * @param requestedScopes the scopes
+     * @return list of permissions
+     */
+    List<OAuthPermission> allowableScopeToPermissions(Client client,
+                                                    List<String> requestedScopes);
+
+    /**
      * Converts the requested scopes to the list of permissions.
      * The scopes are extracted from OAuth2 'scope' property which
      * if set may contain one or more space separated scope values
@@ -131,4 +141,10 @@ public interface OAuthDataProvider {
      */
     List<OAuthPermission> convertScopeToPermissions(Client client,
                                                     List<String> requestedScopes);
+
+    boolean noConsentForRequestedScopes(MultivaluedMap<String, String> params,
+                                        Client client,
+                                        UserSubject userSubject,
+                                        List<String> requestedScope,
+                                        List<OAuthPermission> permissions);
 }
