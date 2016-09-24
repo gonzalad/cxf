@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate
+Mapping DTD//EN" "http://hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="org.apache.cxf.rs.security.oauth2.common">
+  <!-- adds 2nd level cache to httpVerbs and uris attributes -->
+  <class name="OAuthPermission">
+    <cache usage="read-write"/>
+    <id name="permission"/>
+    <list name="httpVerbs" lazy="false">
+      <cache usage="read-write"/>
+      <key column="oauthpermission_permission"/>
+      <index column="httpverbs_order"/>
+      <element type="string" column="httpVerbs" />
+    </list>
+    <list name="uris" lazy="false">
+      <cache usage="read-write"/>
+      <key column="oauthpermission_permission"/>
+      <index column="uris_order"/>
+      <element type="string" column="uris" />
+    </list>
+    <property name="description"/>
+    <property name="invisibleToClient"/>
+    <property name="defaultPermission"/>
+  </class>
+</hibernate-mapping>

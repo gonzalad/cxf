@@ -5,6 +5,7 @@
 
     <persistence-unit name="testUnitHibernate" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
+        <mapping-file>META-INF/cxf-oidc.hbm.xml</mapping-file>
         <class>org.apache.cxf.rs.security.oauth2.common.Client</class>
         <class>org.apache.cxf.rs.security.oauth2.common.UserSubject</class>
         <class>org.apache.cxf.rs.security.oauth2.grants.code.ServerAuthorizationCodeGrant</class>
@@ -12,8 +13,12 @@
         <class>org.apache.cxf.rs.security.oauth2.tokens.bearer.BearerAccessToken</class>
         <class>org.apache.cxf.rs.security.oauth2.common.ServerAccessToken</class>
         <class>org.apache.cxf.rs.security.oauth2.common.AccessToken</class>
-        <class>org.apache.cxf.rs.security.oauth2.common.OAuthPermission</class>
+        <!--
+        these declarations were removed to use hibernate specific features
+        see cxf-oidc.hbm.xml
         <class>org.apache.cxf.rs.security.oauth2.common.Permission</class>
+        <class>org.apache.cxf.rs.security.oauth2.common.OAuthPermission</class>
+        -->
         <class>org.apache.cxf.rs.security.oauth2.tokens.refresh.RefreshToken</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <shared-cache-mode>ENABLE_SELECTIVE</shared-cache-mode>
