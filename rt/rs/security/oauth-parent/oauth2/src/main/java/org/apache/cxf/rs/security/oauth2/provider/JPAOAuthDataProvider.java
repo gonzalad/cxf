@@ -104,8 +104,7 @@ public class JPAOAuthDataProvider extends AbstractOAuthDataProvider {
             @Override
             public Void execute(EntityManager em) {
                 if (client.getResourceOwnerSubject() != null) {
-                    UserSubject sub =
-                            em.find(UserSubject.class, client.getResourceOwnerSubject().getLogin());
+                    UserSubject sub = em.find(UserSubject.class, client.getResourceOwnerSubject().getId());
                     if (sub == null) {
                         em.persist(client.getResourceOwnerSubject());
                     } else {
@@ -264,11 +263,11 @@ public class JPAOAuthDataProvider extends AbstractOAuthDataProvider {
                 serverToken.setScopes(perms);
 
                 if (serverToken.getSubject() != null) {
-                    UserSubject sub = em.find(UserSubject.class, serverToken.getSubject().getLogin());
+                    UserSubject sub = em.find(UserSubject.class, serverToken.getSubject().getId());
                     if (sub == null) {
                         em.persist(serverToken.getSubject());
                     } else {
-                        sub = serverToken.getSubject();
+                        sub = em.merge(serverToken.getSubject());
                         serverToken.setSubject(sub);
                     }
                 }
@@ -320,8 +319,7 @@ public class JPAOAuthDataProvider extends AbstractOAuthDataProvider {
     protected TypedQuery<BearerAccessToken> getTokensQuery(Client c, UserSubject resourceOwnerSubject,
                                                            EntityManager entityManager) {
         if (c == null && resourceOwnerSubject == null) {
-            return entityManager.createQuery("SELECT t FROM BearerAccessToken t",
-                    BearerAccessToken.class);
+            return entityManager.createQuery("SELECT t FROM BearerAccessToken t", BearerAccessToken.class);
         } else if (c == null) {
             return entityManager.createQuery(
                     "SELECT t FROM BearerAccessToken t"
